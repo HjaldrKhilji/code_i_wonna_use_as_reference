@@ -1,0 +1,80 @@
+//find the libraries requried urself!!!!
+//base code for getting a unique key:
+key_t  key_generation(){
+//pid is just a name for the random key cuz i just thought its cool!
+//this function may have its own ups and downs but it tries its best!
+srand(time(NULL));   // Initialization for rand call and possibly other calls, should only be called once.so call it once and use the rand call as many times as u wish!!!
+unsigned int pid = rand();      // Returns a pseudo-random integer between 0 and RAND_MAX
+
+char pid_key_string_form[17];
+itoa((uint16_t)pid, pid_key_string_form,DECIMAL); //this line means the same as :(void) sprintf(buffer, "%d", n);
+pid_key=open(pid_key_string_form, O_CREAT);
+char current_path[PATH_MAX];
+getcwd(current_path, PATH_MAX);
+if(current_path==NULL){
+fprintf(stderr,"shit got tight and something really really unexpected happened while making a key generation file, the issue occured in the getcwd function cuz i used that in my key generation function\n");
+fprintf(stderr, "please please restart ur program and if the issue is still persistant then please contact a professional\n, U may tho proced at ur own risk  :DDDDDD\n, jokes aside dont!!\n");
+}
+strcpy(current_path, pid_key_string_form);
+key_t key=ftok(current_path,pid);
+close(pid_key);
+ while(remove(pid_key_string_form)!=0){
+fprintf(stderr,"\n something messed up happened in the remove call in the function that is meant to generate a key, its the function that serves as the base to the rest of the key generation function, the name of the function is key_generation\n. i am gonna try to call the remove() function again\n");
+}
+return key;
+
+}
+
+
+int main(){
+void *pointer_for_shared_memory;
+//keys(name) for shm_open:
+key_t key_temp =key_generation();
+char key_string_form[sizeof(long long int)+1];
+int shm_open_file_descriptor;//return value of shm_open
+usinged int counter_for_error_rate_tracking=0;
+unsinged long long int counter_for_bigger_scope=0;
+do{
+fprintf(key_string_form, "llu", key_temp);
+shm_open_file_descriptor=shm_open(key_string_form,O_CREAT|O_RDWR |O_EXCL ,0777);//change 0777 with the protection u want
+counter_for_error_rate_tracking++;
+
+if(counter_for_error_rate_tracking==10001){//set it to what ever error limit u wonna set it to till u alert the user
+counter_for_bigger_scope++;
+fprintf(stderr,"error while making a shared memory object for %d*%dtimes\n, lets hope its a coincedance\n", counter_for_bigger_scope*10000);
+counter_for_error_rate_tracking=0;
+
+}
+key_temp++;
+}while(shm_open_file_descriptor==-1);
+
+while(ftruncate(shm_open_file_descriptor, (((1000*sizeof(char))/sysconf(_SC_PAGE_SIZE))+1)*sysconf(_SC_PAGE_SIZE))==-1){
+fprintf(stderr,"\nerror while setting the size of the shared memory object\n");
+}
+
+do{
+pointer_for_shared_memory=mmap(NULL, (((1000*sizeof(char))/sysconf(_SC_PAGE_SIZE))+1)*sysconf(_SC_PAGE_SIZE), PROT_WRITE|PROT_READ, MAP_SHARED, file_to_map_to,0);///sysconf()+1)*sysconf() is for alignment purposes only
+fprintf(stderr,"\nerror while mapping the shared memory object to a pointer using mmap\n");
+}while(pointer_for_shared_memory==NULL);
+
+
+while(
+msync(pointer_for_shared_memory, (((1000*sizeof(char))/sysconf(_SC_PAGE_SIZE))+1)*sysconf(_SC_PAGE_SIZE), MS_SYNC )==-1){
+fprintf(stderr,"\nerror while syncing memory\n");
+}
+
+
+//end of shared memory object usage, hence calling this to clean it up:
+
+while (munmap( pointer_for_shared_memory,  (((1000*sizeof(char))/sysconf(_SC_PAGE_SIZE))+1)*sysconf(_SC_PAGE_SIZE) )==-1){
+fprintf(stderr, "\nfailed to unmap memory using the munmap() function call\n");
+
+}
+while(close(shm_open_file_descriptor)==-1){
+fprintf(stderr,"\nerror while closing the shared memory object file descriptor\n");
+}
+while(shm_unlink(key_string_form)==-1){
+fprintf(stderr, "\n error while calling the shm_unlink() function to remove the shared memory object\n");
+}
+return 0;
+}

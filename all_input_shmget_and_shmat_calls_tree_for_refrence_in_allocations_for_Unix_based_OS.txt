@@ -1,0 +1,162 @@
+shmgets:
+
+bulk:
+
+
+int INITIAL_SIZE=(((((((MINIMUM_LIMIT_FOR_BASE_INPUT*sizeof(char))+(how_many_inputs*sizeof(char*))+(how_many_inputs*sizeof(int)))/alignment_var)+1))*alignment_var);
+    
+   
+    int shmid_data = shmget( IPC_PRIVATE, INITIAL_SIZE, IPC_CREAT | protection_for_all_memory );
+ for(long int i=0, x=0;shmid_data==-1; i++){
+ shmid_data = shmget( IPC_PRIVATE, INITIAL_SIZE, IPC_CREAT | protection_for_all_memory );
+ 
+if(i==1000){//replace 1000 with what ever u want
+x++;
+fprintf(stderr,"\ntried making shmget key %d times, but failed all of them, the reason for error is:\n",i*x);
+perror("");
+fprintf(stderr,"\nlets hope this is a coincedance\n");
+i=0;
+
+
+}
+}
+
+
+
+minimum_size_over_flow_removal_and_re_allocation:
+ shmdt((input));
+   shmctl( shmid_data, IPC_RMID, NULL );
+   int alignment_var= sysconf(_SC_PAGE_SIZE); 
+    int INITIAL _SIZE =INITIAL_SIZE* times_the_limit_reached;
+    int shmid_data = shmget( IPC_PRIVATE, INITIAL_SIZE, IPC_CREAT | protection_for_all_memory );
+    for(long int i=0, x=0;shmid_data==-1; i++){
+ shmid_data = shmget( IPC_PRIVATE, INITIAL_SIZE, IPC_CREAT | protection_for_all_memory );
+ 
+if(i==1000){//replace 1000 with what ever u want
+x++;
+fprintf(stderr,"\ntried making shmget key %d times, but failed all of them, the reason for error is:\n",i*x);
+perror("");
+fprintf(stderr,"\nlets hope this is a coincedance\n");
+i=0;
+}
+}   
+
+
+
+
+
+
+
+normal:
+
+    int INITIAL_SIZE_=((((((MINIMUM_LIMIT_FOR_BASE_INPUT*sizeof(char)))/alignment_var)+1))*alignment_var);
+    int INITIAL_SIZE=INITIAL_SIZE_;
+    int shmid_data = shmget( IPC_PRIVATE, INITIAL_SIZE, IPC_CREAT | protection_for_all_memory );
+ for(long int i=0, x=0;shmid_data==-1; i++){
+ shmid_data = shmget( IPC_PRIVATE, INITIAL_SIZE, IPC_CREAT | protection_for_all_memory );
+ 
+if(i==1000){//replace 1000 with what ever u want
+x++;
+fprintf(stderr,"\ntried making pipes %d times, but failed all of them, the reason for error is:\n",i*x);
+perror("");
+fprintf(stderr,"\nlets hope this is a coincedance\n");
+i=0;
+
+
+}
+}   
+
+
+
+minimum_size_over_flow_removal_and_re_allocation:
+
+shmdt((input));
+   shmctl( shmid_data, IPC_RMID, NULL );
+   int alignment_var= sysconf(_SC_PAGE_SIZE); 
+    int INITIAL_SIZE =INITIAL_SIZE* times_the_limit_reached;
+    int shmid_data = shmget( IPC_PRIVATE, INITIAL_SIZE, IPC_CREAT | protection_for_all_memory );
+    for(long int i=0, x=0;shmid_data==-1; i++){
+ shmid_data = shmget( IPC_PRIVATE, INITIAL_SIZE, IPC_CREAT | protection_for_all_memory );
+ 
+if(i==1000){//replace 1000 with what ever u want
+x++;
+fprintf(stderr,"\ntried making pipes %d times, but failed all of them, the reason for error is:\n",i*x);
+perror("");
+fprintf(stderr,"\nlets hope this is a coincedance\n");
+i=0;
+
+
+}
+}   
+
+shmat:
+
+bulk:
+ (input_array) = (char*)shmat( shmid_data, NULL, 0 ); 
+     for(long int i=0, x=0;(input)==(void*)(-1); i++){
+ (input_array) = (char*)shmat( shmid_data, NULL, 0 ); 
+
+if(i==1000){//replace 1000 with what ever u want
+x++;
+fprintf(stderr,"\ntried assigning memory using shmget key %d times, but failed all of them, the reason for error is:\n",i*x);
+perror("");
+fprintf(stderr,"\nlets hope this is a coincedance\n");
+i=0;
+
+
+
+}
+}   
+
+
+minimum_size_over_flow_removal_and_re_allocation:
+
+ (input) =(char*) shmat( shmid_data, NULL, 0 ); 
+      for(long int i=0, x=0;(input)==(void*)(-1); i++){
+ (input) = (char*)shmat( shmid_data, NULL, 0 ); 
+
+if(i==1000){//replace 1000 with what ever u want
+x++;
+fprintf(stderr,"\ntried assigned shared memory using shmat %d times, but failed all of them, the reason for error is:\n",i*x);
+perror("");
+fprintf(stderr,"\nlets hope this is a coincedance\n");
+i=0;
+}
+}  
+
+
+normal:
+
+ (input_array) = (char*)shmat( shmid_data, NULL, 0 ); 
+     for(long int i=0, x=0;(input)==(void*)(-1); i++){
+ (input_array) = (char*)shmat( shmid_data, NULL, 0 ); 
+
+if(i==1000){//replace 1000 with what ever u want
+x++;
+fprintf(stderr,"\ntried assigning memory using shmget key %d times, but failed all of them, the reason for error is:\n",i*x);
+perror("");
+fprintf(stderr,"\nlets hope this is a coincedance\n");
+i=0;
+
+
+
+}
+}   
+  
+minimum_size_over_flow_removal_and_re_allocation: 
+
+
+ (input) =(char*) shmat( shmid_data, NULL, 0 ); 
+      for(long int i=0, x=0;(input)==(void*)(-1); i++){
+ (input) = (char*)shmat( shmid_data, NULL, 0 ); 
+
+if(i==1000){//replace 1000 with what ever u want
+x++;
+fprintf(stderr,"\ntried making pipes %d times, but failed all of them, the reason for error is:\n",i*x);
+perror("");
+fprintf(stderr,"\nlets hope this is a coincedance\n");
+i=0;
+
+
+}
+}  
