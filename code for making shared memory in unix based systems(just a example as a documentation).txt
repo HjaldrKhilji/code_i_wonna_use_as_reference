@@ -35,7 +35,7 @@ int shm_open_file_descriptor;//return value of shm_open
 usinged int counter_for_error_rate_tracking=0;
 unsinged long long int counter_for_bigger_scope=0;
 do{
-fprintf(key_string_form, "llu", key_temp);
+sprintf(key_string_form, "llu", key_temp);
 shm_open_file_descriptor=shm_open(key_string_form,O_CREAT|O_RDWR |O_EXCL ,0777);//change 0777 with the protection u want
 counter_for_error_rate_tracking++;
 
